@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         // Commands\Inspire::class,
-        Commands\SendDirectDebitInstructions::class
+        Commands\CleanClientData::class
     ];
 
 

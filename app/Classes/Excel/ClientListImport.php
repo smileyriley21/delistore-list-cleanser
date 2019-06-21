@@ -14,7 +14,7 @@ class ClientListImport extends ExcelFile {
 
     public function getFile()
     {
-        return storage_path('exports') . '/customers.xlsx';
+        return storage_path('app/exports') . '/combined.xlsx';
     }
 
     public function getFilters()
