@@ -37,11 +37,14 @@ class CleanClientData extends Command
     {
 
 
-        // get the results
-        $results = $import->get()[0];
+
+
+        // get the results (used to have [0] at the send, assuming this is the first sheet?
+        $results = $import->get();
 
         // The total results...
          $total_results = count($results);
+
 
         // The current row we are working on
         $current_row_number = 0;

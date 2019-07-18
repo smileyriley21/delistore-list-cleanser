@@ -36,7 +36,10 @@ class CheckCustomerValidity  extends Command/* implements ShouldQueue*/
      */
     public function handle()
     {
+
+        echo "Testing -> ";
         $passed = $this->checkEmailKillWords();
+
 
         if($passed)
             $passed = $this->checkNameKillWords();
@@ -49,13 +52,13 @@ class CheckCustomerValidity  extends Command/* implements ShouldQueue*/
         }
 
         if($passed){
-            echo "Passed ->";
+            echo "| Passed";
             $this->dispatch(new WriteCustomerToFile($this->first_row, 'passed.csv'));
 
         }
         else{
 
-            echo "*** Failed ->";
+            echo " |  Failed ";
             $this->dispatch(new WriteCustomerToFile($this->first_row, 'failed.csv'));
         }
 
@@ -85,6 +88,7 @@ class CheckCustomerValidity  extends Command/* implements ShouldQueue*/
 
             }
         }
+        echo " Name Kill Words | ";
         return true;
     }
 
@@ -100,7 +104,7 @@ class CheckCustomerValidity  extends Command/* implements ShouldQueue*/
                 return false;
 
             }
-
+        echo " Email Kill Words | ";
         return true;
     }
 
@@ -116,8 +120,10 @@ class CheckCustomerValidity  extends Command/* implements ShouldQueue*/
         // Fail if last two letters are uppercase and the whole thing is not uppercase
         if(mb_strtoupper($last_two_letters)===$last_two_letters && !(mb_strtoupper($this->first_row->customerfirstname)===$this->first_row->customerfirstname)){
             return false;
+
         }
 
+        echo " Letters | ";
         return true;
     }
 
@@ -127,7 +133,14 @@ class CheckCustomerValidity  extends Command/* implements ShouldQueue*/
      */
     private function checkForDuplicateRows(){
 
-            if($this->first_row->customerfirstname == $this->second_row->customerfirstname){
+
+
+            if($this->first_row->customerfirstname == $this->second_row->customerfirstname &&
+                $this->first_row->customerlastname == $this->second_row->customerlastname &&
+                $this->first_row->email == $this->second_row->email
+
+
+            ){
 
                 if($this->first_row->address1 != NULL || $this->first_row->address2 != NULL){
                     $this->ignore_next_row=true;
@@ -139,7 +152,10 @@ class CheckCustomerValidity  extends Command/* implements ShouldQueue*/
 
             }
 
+        echo " Duplicates | ";
+
         return true;
+
 
     }
 
